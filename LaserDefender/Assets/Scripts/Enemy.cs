@@ -10,6 +10,9 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private GameObject projectile;
     [SerializeField] private float projectileSpeed;
+    [SerializeField] private GameObject deathVFX;
+    [SerializeField] private float durationExplosion;
+
     private void Start()
     {
         shotCounter = UnityEngine.Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
@@ -51,7 +54,14 @@ public class Enemy : MonoBehaviour
         damageDealer.Hit();
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
+        GameObject explosion = Instantiate(deathVFX, transform.position, transform.rotation);
+        Destroy(explosion, durationExplosion);
     }
 }
